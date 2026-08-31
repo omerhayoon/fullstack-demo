@@ -1,0 +1,5 @@
+2026/07/26-13:21:00.651 87d8 Creating DB C:\Users\עומר\FullStackDemo\backend\demo\.wwebjs_auth\session-session-client\Default\Local Storage\leveldb since it was missing.
+2026/07/26-13:21:00.719 87d8 Reusing MANIFEST C:\Users\עומר\FullStackDemo\backend\demo\.wwebjs_auth\session-session-client\Default\Local Storage\leveldb/MANIFEST-000001
+2026/08/05-17:50:58.850 9be0 Level-0 table #5: started
+2026/08/05-17:50:58.900 9be0 Level-0 table #5: 10393 bytes OK
+2026/08/05-17:50:58.915 9be0 Delete type=0 #3

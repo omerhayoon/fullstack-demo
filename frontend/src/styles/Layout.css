@@ -1,0 +1,83 @@
+@import "./Variables.css";
+
+
+.page {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+
+/* החלונית באמצע */
+
+.card {
+
+    background: white;
+
+    padding: var(--padding-large);
+
+    width: 450px;
+
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+
+    animation: showCard 0.8s ease;
+
+}
+
+
+/* כותרת */
+
+.title {
+
+    color: var(--primary-color);
+
+    font-size: 40px;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* הודעה מהשרת */
+
+.text {
+
+    color: var(--text-color);
+
+    font-size: 25px;
+
+}
+
+
+/* אנימציה */
+
+@keyframes showCard {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(30px);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}

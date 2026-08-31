@@ -1,0 +1,9 @@
+node_modules/
+.env
+build/
+dist/
+.DS_Store
+.wwebjs_auth/
+.wwebjs_cache/
+.m2/
+target/

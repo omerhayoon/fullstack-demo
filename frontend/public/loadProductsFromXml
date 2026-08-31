@@ -1,0 +1,92 @@
+async function loadProductsFromXml(xmlPath) {
+  try {
+    // 1. טעינת הקובץ כ-ArrayBuffer
+    const response = await fetch(xmlPath);
+    if (!response.ok) {
+      throw new Error(`שגיאה שטעינת הקובץ (סטטוס: ${response.status})`);
+    }
+
+    const rawBuffer = await response.arrayBuffer();
+    let decompressedBuffer = rawBuffer;
+
+    // 2. ניסיון פריסת Gzip אם הקובץ דחוס
+    try {
+      const ds = new DecompressionStream('gzip');
+      const decompressedStream = new Response(rawBuffer).body.pipeThrough(ds);
+      decompressedBuffer = await new Response(decompressedStream).arrayBuffer();
+    } catch (e) {
+      // הקובץ אינו דחוס
+    }
+
+    // 3. פענוח הטקסט ע"פ זיהוי קידוד (UTF-16LE, UTF-8, Windows-1255)
+    let xmlText = '';
+    const encodingsToTry = ['utf-16le', 'utf-8', 'windows-1255', 'iso-8859-8'];
+
+    for (const enc of encodingsToTry) {
+      try {
+        const decoder = new TextDecoder(enc);
+        const textCandidate = decoder.decode(decompressedBuffer);
+
+        // בדיקה אם יש תווים בעברית
+        if (/[\u0590-\u05FF]/.test(textCandidate)) {
+          xmlText = textCandidate;
+          break;
+        }
+      } catch (e) {
+        // המשיך לקידוד הבא במקרה של שגיאה
+      }
+    }
+
+    if (!xmlText) {
+      xmlText = new TextDecoder('utf-16le').decode(decompressedBuffer);
+    }
+
+    // 4. ניקוי תווים מיותרים בראש הקובץ
+    xmlText = xmlText.replace(/\0/g, '').replace(/^[^<]+/, '').trim();
+
+    // 5. פירסור ה-XML
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+
+    // 6. שליפת אלמנטי ה-Item והפקת השם והמחיר
+    const items = xmlDoc.getElementsByTagName('Item');
+    const parsedProducts = [];
+
+    // פונקציית עזר לשליפת ערך מתגית פנימית
+    const getTagValue = (parentEl, tagName) => {
+      const el = parentEl.getElementsByTagName(tagName)[0];
+      return el && el.textContent ? el.textContent.trim() : '';
+    };
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+
+      const name = getTagValue(item, 'ItemName') || 
+                   getTagValue(item, 'ItemNm') || 
+                   getTagValue(item, 'ItemDescription') || 
+                   getTagValue(item, 'Name');
+
+      const price = getTagValue(item, 'ItemPrice') || 
+                    getTagValue(item, 'Price') || 
+                    getTagValue(item, 'UnitPrice');
+
+      const code = getTagValue(item, 'ItemCode') || 
+                   getTagValue(item, 'BarCode') || 
+                   `item-${i}`;
+
+      if (name || price) {
+        parsedProducts.push({
+          id: `${code}-${i}`,
+          name: name || 'מוצר ללא שם',
+          price: price ? parseFloat(price).toFixed(2) : '0.00'
+        });
+      }
+    }
+
+    return parsedProducts;
+
+  } catch (error) {
+    console.error('שגיאה בשליפת המוצרים:', error);
+    throw error;
+  }
+}

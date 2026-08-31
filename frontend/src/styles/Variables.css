@@ -1,0 +1,13 @@
+:root {
+
+    --background-color: #20232a;
+    --primary-color: #61dafb;
+    --card-color: #ffffff;
+    --text-color: #333;
+
+    --border-radius: 20px;
+    --shadow: 0 15px 40px rgba(0,0,0,0.35);
+
+    --padding-large: 50px;
+
+}

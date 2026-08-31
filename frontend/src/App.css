@@ -1,0 +1,759 @@
+/* יבוא פונט מודרני מ-Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-color: #0f111a;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-hover-bg: rgba(255, 255, 255, 0.07);
+    --primary-color: #00f2fe;
+    --secondary-color: #4facfe;
+    --text-main: #ffffff;
+    --text-muted: #8a99ad;
+}
+
+.app-container {
+    min-height: 100vh;
+    width: 100vw;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    font-family: 'Assistant', sans-serif;
+    position: relative;
+    overflow-x: hidden;
+    direction: rtl; /* כיוון כתיבה לעברית */
+}
+
+/* קונטיינר פנימי שממרכז את התוכן של כל עמוד בנפרד */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* אפקט תאורת רקע עמוקה - נשאר יציב ברקע של האפליקציה */
+.bg-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.main-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, #ffffff 0%, var(--text-muted) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+
+    /* שורות הקסם ליישור האייקון והטקסט */
+    display: inline-flex;       /* מאפשר להחיל מאפייני flex בלי להרחיב את הכותרת לכל רוחב המסך */
+    align-items: center;        /* מיישר את האייקון והטקסט בדיוק לאותו הגובה (אנכית) */
+    gap: 12px;                  /* יוצר מרווח קטן, מדויק ונקי בין האייקון למילה */
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: 8px;
+    font-weight: 400;
+}
+
+/* כפתור מודרני עם גרדיאנט וצללית זוהרת */
+.action-button {
+    padding: 14px 36px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 50px;
+    border: none;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: #000;
+    box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(79, 172, 254, 0.5);
+    letter-spacing: 0.5px;
+}
+
+/* כפתור חזרה ייעודי לעמודים הפנימיים */
+.back-btn {
+    margin-top: 40px;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: none;
+}
+
+.back-btn:hover {
+    background: rgba(0, 242, 254, 0.1);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+/* קונטיינר הסליידר */
+.slider-container {
+    width: 100%;
+    max-width: 950px;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.cards-slider {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 15px 10px;
+    scrollbar-width: none; /* הסתרת פס גלילה בדיפולט */
+    justify-content: safe center; /* מרכוז מושלם של הכרטיסיות */
+}
+
+/* הצגת פס גלילה עדין ומודרני רק ב-Hover */
+.cards-slider::-webkit-scrollbar {
+    height: 5px;
+}
+.cards-slider::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+.cards-slider:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 254, 0.3);
+}
+
+/* כרטיסייה יוקרתית בסגנון ריבוע זכוכית מעוגל */
+.card-item {
+    min-width: 170px;
+    height: 170px;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px); /* אפקט זכוכית */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* אפקט ריחוף מרשים על הכרטיסייה */
+.card-item:hover {
+    background: var(--card-hover-bg);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 12px 30px rgba(0, 242, 254, 0.08);
+}
+
+.card-icon {
+    font-size: 2.2rem; /* גודל האייקון הוקטורי */
+    color: var(--primary-color); /* האייקונים יקבלו את הצבע הראשי של האפליקציה */
+    background: rgba(255, 255, 255, 0.03);
+    width: 60px; /* הגדלנו מעט כדי להתאים לאייקונים החדשים */
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    transition: transform 0.3s ease, color 0.3s ease; /* הוספת טרנזישן לצבע */
+}
+
+/* כשאנחנו מרחפים מעל הכרטיסייה, גם האייקון יהיה זוהר יותר */
+.card-item:hover .card-icon {
+    transform: rotate(-10deg) scale(1.1);
+    color: #fff; /* צבע לבן כשמרחפים */
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-tag {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+/* סרגל צידי שמאלי שמחזיק את השעון וההודעות */
+.left-sidebar {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* מרווח קבוע בין השעון לחלונית ההודעות */
+    width: 320px; /* רוחב קבוע לחלונית */
+    z-index: 100;
+}
+
+/* רכיב השעה והתאריך הקבוע */
+.live-datetime {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 14px 22px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    font-variant-numeric: tabular-nums;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.live-date {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.live-time {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+/* חלונית פיד ההודעות */
+.messages-feed-widget {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-height: 400px; /* מגביל את גובה החלונית כדי שלא תתפוס את כל המסך */
+    overflow: hidden;
+}
+
+.widget-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.widget-header h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.widget-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto; /* מאפשר גלילה פנימית אם יש הרבה הודעות */
+    scrollbar-width: none;
+}
+
+.widget-content::-webkit-scrollbar {
+    display: none; /* מסתיר את פס הגלילה המכוער של הדפדפן */
+}
+
+/* כרטיסיית הודעה בודדת בפיד */
+.feed-message-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.feed-message-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.message-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+}
+
+.message-sender {
+    font-weight: 800;
+    color: var(--secondary-color); /* שם המשתמש בצבע כחול/גרדיאנט */
+}
+
+.message-time-stamp {
+    color: var(--text-muted);
+}
+
+.message-text {
+    margin: 0;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    word-break: break-word; /* מונע מטקסט ארוך לצאת מגבולות הכרטיסייה */
+    text-align: right;
+}
+/* קונטיינר לחלונית כתיבת ההודעה */
+.message-form-container {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 30px;
+    width: 100%;
+    max-width: 450px; /* גודל אידיאלי לחלונית קטנה וממוקדת */
+    box-sizing: border-box;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.message-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* שדות הקלט (Input & Textarea) */
+.form-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #fff;
+    font-family: 'Assistant', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+}
+
+.form-textarea {
+    resize: none; /* מונע מהמשתמש להרוס את גודל החלונית */
+}
+
+/* כפתור ה-POST */
+.post-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* הודעת פופאפ קטנה על הצלחה */
+.success-toast {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #10b981; /* צבע ירוק הצלחה */
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    animation: fadeInOut 0.3s ease;
+}
+
+/* טקסט זמני כשאין הודעות */
+.no-messages {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 20px 0;
+}
+
+@keyframes fadeInOut {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* חיבור אלמנטים בצד שמאל של מטא ההודעה */
+.meta-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* כפתור מחיקת הודעה עדין */
+.delete-msg-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.delete-msg-btn:hover {
+    color: #ef4444; /* הופך לאדום בריחוף */
+    background: rgba(239, 68, 68, 0.1);
+    transform: scale(1.1);
+}
+/* מבנה ה-Grid של הדשבורד (2x2) */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* יוצר 2 עמודות שוות */
+    gap: 24px; /* רווח בין החלוניות */
+    width: 100%;
+    max-width: 800px; /* רווח מקסימלי נוח לעין */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* כרטיסיית דשבורד בודדת */
+.dash-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 24px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.dash-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* תוכן הכרטיסייה הפנימי */
+.dash-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.dash-card-content.justify-center {
+    justify-content: center;
+}
+
+/* טקסטים ייעודיים למונים ולתוצאות */
+.counter-number, .speed-number {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.counter-label, .dash-placeholder {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.speed-result {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.speed-unit {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.loading-text {
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    margin: auto;
+}
+
+/* כפתור מהירות ייעודי */
+.speed-btn {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    width: 100%;
+    border-radius: 12px;
+}
+
+/* חלוניות ריקות (בקרוב) */
+.empty-card {
+    opacity: 0.6;
+}
+/* רשימת המשתמשים המובילים */
+.leaderboard-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px 0;
+}
+
+/* שורה בודדת ברשימה */
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 10px 14px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+}
+
+.leaderboard-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* מספר המיקום (#1, #2, #3) */
+.user-rank {
+    font-weight: 800;
+    color: var(--primary-color); /* צבע זוהר */
+    margin-left: 12px;
+    font-size: 1.05rem;
+    min-width: 25px;
+}
+
+/* שם המשתמש */
+.user-name {
+    font-weight: 600;
+    color: #e6ebec;
+    flex: 1; /* דוחף את כמות ההודעות לשמאל הקיצוני */
+    text-align: right;
+}
+
+/* כמות ההודעות */
+.user-count {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* 1. הגדלת רוחב המיקום הכללי של החלונית (למשל מ-220 פיקסלים ל-260) */
+.right-auth-sidebar {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 260px; /* 👈 הגדלנו את הרוחב הכללי של האזור */
+    z-index: 999;
+}
+
+/* כרטיסיית מצב אורח */
+.guest-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 14px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.guest-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.login-trigger-btn {
+    width: 100%;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: 12px;
+}
+
+.right-auth-sidebar {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 999; /* ערך גבוה שמשאיר אותו תמיד מעל הכל */
+}
+
+/* חלונית במצב אורח - רק כפתור נקי */
+.guest-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.login-trigger-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* חלונית במצב מחובר - קומפקטית מאוד */
+.user-logged-in-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 16px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.welcome-user-text {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #12f506;
+}
+
+.auth-action-link {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-family: 'Assistant', sans-serif;
+}
+
+.auth-action-link:hover {
+    color: #fff;
+}
+/* 2. הגדלת החלונית עצמה כשהטופס פתוח */
+.login-form-expanded {
+    width: 100%; /* תמיד יתפוס 100% מהרוחב של ה-sidebar (כלומר 260px) */
+    padding: 20px; /* 👈 הגדלנו את המרווח הפנימי שהחלונית תרגיש גדולה ומרווחת יותר */
+    transition: all 0.3s ease;
+}
+
+.mini-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.mini-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.mini-form-group label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* 3. הגדלת שדות הקלט (האינפוטים) כדי שיהיה יותר נוח להקליד */
+.mini-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 10px 12px; /* 👈 הגדלנו את הפדינג הפנימי של השדות (היה 6px 10px) */
+    color: #0cf304;
+    font-size: 0.95rem; /* 👈 הגדלנו מעט את גודל הפונט של הטקסט בפנים */
+    box-sizing: border-box;
+    font-family: 'Assistant', sans-serif;
+    transition: border-color 0.2s ease;
+}
+
+.mini-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* שורת כפתורי הפעולה בתחתית הטופס */
+.form-actions-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.mini-submit-btn {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    border-radius: 8px;
+}
+
+.cancel-link {
+    color: #e00505; /* כפתור ביטול באדום עדין */
+}
+
+.cancel-link:hover {
+    color: #f87171;
+}
+/* טקסט נקודות המשתמש */
+.user-points-text {
+    font-size: 1rem;
+    color: #35e808; /* גוון זהב עדין לנקודות/מטבעות */
+    font-weight: 600;
+    margin-top: 2px;
+    margin-bottom: 4px; /* נותן מרווח קטן לפני כפתור ההתנתקות */
+}
+
+
+
